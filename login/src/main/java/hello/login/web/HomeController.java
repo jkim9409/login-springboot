@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -54,6 +55,19 @@ public class HomeController {
         }
 
         model.addAttribute("member", member);
+        return "loginHome";
+    }
+//    @GetMapping("/")
+    public String homeLoginV3Spring(@SessionAttribute(name = SessionConstant.LOGIN_MEMBER, required = false) Member loginMember, Model model ) {
+
+        // if no member data in the session go home
+        if (loginMember == null) {
+            return "home";
+        }
+
+        // if session continues move to loginHome
+
+        model.addAttribute("member", loginMember);
         return "loginHome";
     }
     @GetMapping("/")
